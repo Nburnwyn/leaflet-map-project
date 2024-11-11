@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nels Map</title>
-    <!-- Leaflet CSS (without integrity attribute) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <style>
-        /* Set the map size */
         #map {
             height: 500px;
             width: 100%;
@@ -17,25 +15,20 @@
 <body>
     <h1>Nels Map</h1>
     <div id="map"></div>
-
-    <!-- Leaflet JavaScript (without integrity attribute) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
     <script>
         // Initialize the map with a broader view
-var map = L.map('map').setView([52.211689, -1.6278504], 100);
-        // Add a tile layer (map layer) using OpenStreetMap's tiles
+        var map = L.map('map').setView([52.211689, -1.6278504], 10);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Add a marker to the map at the same location as the map center
-        var marker = L.marker([52.211689 , -1.6278504]).addTo(map);
+        var marker = L.marker([52.211689, -1.6278504]).addTo(map);
         marker.bindPopup("<b>This is my house</b><br>Shh! Don't tell anyone!").openPopup();
 
-        // Add a circle around the marker location
-        var circle = L.circle([52.211560 , -1.6278793], {
+        var circle = L.circle([52.211560, -1.6278793], {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
@@ -43,16 +36,14 @@ var map = L.map('map').setView([52.211689, -1.6278504], 100);
         }).addTo(map);
         circle.bindPopup("This is my shed.");
 
-        // Add a rectangle-shaped polygon
         var polygon = L.polygon([
-            [52.211841 , -1.6278524],
-            [52.211860 , -1.6278524],
-            [52.211861 , -1.6277860],
-            [52.211843 , -1.6277854]
+            [52.211841, -1.6278524],
+            [52.211860, -1.6278524],
+            [52.211861, -1.6277860],
+            [52.211843, -1.6277854]
         ]).addTo(map);
         polygon.bindPopup("This is where my annoying neighbour always parks his car.");
 
-        // Fetch and load the GeoJSON boundary file
         console.log("Fetching GeoJSON file...");
         fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/main/20241111_LNRS_Webmapping_CountyBoundary_v1.geojson')
             .then(response => {
@@ -61,20 +52,24 @@ var map = L.map('map').setView([52.211689, -1.6278504], 100);
             })
             .then(data => {
                 console.log("GeoJSON data:", data);
-                // Add the GeoJSON layer to the map
-                L.geoJSON(data, {
+                
+                // Add the GeoJSON layer to the map with enhanced style
+                let geojsonLayer = L.geoJSON(data, {
                     style: function(feature) {
                         return {
                             color: "blue",
-                            weight: 2,
-                            opacity: 0.6
+                            weight: 4,
+                            opacity: 1,
+                            fillOpacity: 0.3
                         };
                     }
                 }).addTo(map);
+
+                // Fit the map to the boundary
+                map.fitBounds(geojsonLayer.getBounds());
             })
             .catch(error => console.log("Error loading GeoJSON: ", error));
 
-        // Test with a sample GeoJSON object
         var sampleGeoJSON = {
             "type": "FeatureCollection",
             "features": [
@@ -99,7 +94,6 @@ var map = L.map('map').setView([52.211689, -1.6278504], 100);
             ]
         };
 
-        // Add the sample GeoJSON layer to the map
         L.geoJSON(sampleGeoJSON, {
             style: function(feature) {
                 return {

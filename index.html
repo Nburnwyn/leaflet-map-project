@@ -10,14 +10,38 @@
             height: 500px;
             width: 100%;
         }
+        /* Basic legend styles */
+        .legend {
+            background-color: white;
+            padding: 10px;
+            line-height: 1.5em;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+        .legend .marker-icon {
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin-right: 6px;
+        }
+        .legend .boundary-line {
+            display: inline-block;
+            width: 20px;
+            height: 2px;
+            background-color: blue;
+            margin-right: 6px;
+        }
     </style>
 </head>
 <body>
-    <h1>Neils Map</h1>
+    <h1>Neils Map v2</h1>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script>
-        // Initialize the map with a default view over your area of interest
+        // Initialize the map with a default view
         var map = L.map('map').setView([52.211689, -1.6278504], 10);
 
         // Add a tile layer
@@ -25,6 +49,10 @@
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        // Add a marker for the house location
+        var marker = L.marker([52.211689, -1.6278504]).addTo(map);
+        marker.bindPopup("<b>This is my house</b><br>Shh! Don't tell anyone!");
 
         // Load the GeoJSON boundary file and add it to the map
         console.log("Fetching GeoJSON file...");
@@ -47,6 +75,16 @@
                 map.fitBounds(geojsonLayer.getBounds());
             })
             .catch(error => console.log("Error loading GeoJSON: ", error));
+
+        // Create a custom legend using Leaflet Control
+        var legend = L.control({ position: "bottomleft" });
+        legend.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += "<div><span class='boundary-line'></span> Boundary</div>";
+            div.innerHTML += "<div><span class='marker-icon'></span> My House</div>";
+            return div;
+        };
+        legend.addTo(map);
     </script>
 </body>
 </html>

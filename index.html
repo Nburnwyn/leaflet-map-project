@@ -45,30 +45,31 @@
         polygon.bindPopup("This is where my annoying neighbour always parks his car.");
 
         console.log("Fetching GeoJSON file...");
-        fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/refs/heads/main/20241111_LNRS_Webmapping_CountyBoundaryWGS84_v2.geojson')
-            .then(response => {
-                console.log("GeoJSON file fetched:", response);
-                return response.json();
-            })
-            .then(data => {
-                console.log("GeoJSON data:", data);
-                
-                // Add the GeoJSON layer to the map with enhanced style
-                let geojsonLayer = L.geoJSON(data, {
-                    style: function(feature) {
-                        return {
-                            color: "blue",
-                            weight: 4,
-                            opacity: 1,
-                            fillOpacity: 0.3
-                        };
-                    }
-                }).addTo(map);
+        fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/main/20241111_LNRS_Webmapping_CountyBoundaryWGS84_v2.geojson')
+    .then(response => response.json())
+    .then(data => {
+        console.log("GeoJSON data:", data);
 
-                // Fit the map to the boundary
-                map.fitBounds(geojsonLayer.getBounds());
-            })
-            .catch(error => console.log("Error loading GeoJSON: ", error));
+        // Log the first feature's coordinates
+        if (data.features && data.features[0]) {
+            console.log("First feature coordinates:", data.features[0].geometry.coordinates);
+        }
+
+        let geojsonLayer = L.geoJSON(data, {
+            style: function(feature) {
+                return {
+                    color: "blue",
+                    weight: 4,
+                    opacity: 1,
+                    fillOpacity: 0.3
+                };
+            }
+        }).addTo(map);
+
+        // Fit the map to the boundary
+        map.fitBounds(geojsonLayer.getBounds());
+    })
+    .catch(error => console.log("Error loading GeoJSON: ", error));
 
         var sampleGeoJSON = {
             "type": "FeatureCollection",

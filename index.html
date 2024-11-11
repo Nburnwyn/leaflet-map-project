@@ -45,7 +45,7 @@
         polygon.bindPopup("This is where my annoying neighbour always parks his car.");
 
         console.log("Fetching GeoJSON file...");
-        fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/main/20241111_LNRS_Webmapping_CountyBoundary_v1.geojson')
+        fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/refs/heads/main/20241111_LNRS_Webmapping_CountyBoundaryWGS84_v2.geojson')
             .then(response => {
                 console.log("GeoJSON file fetched:", response);
                 return response.json();

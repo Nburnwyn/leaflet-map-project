@@ -51,23 +51,22 @@
 	]).addTo(map);
 	// Attach a popup to the polygon with a message
 	polygon.bindPopup("This is where my annoying neighbour always parks his car (despite having a driveway big enough for 4 cars!).");
-	// Load the GeoJSON boundary file
-	fetch('C:\Users\nbur5\OneDrive - Warwickshire County Council\Documents\LNRS\Java\20241111_LNRS_Webmapping_CountyBoundary_v1.geojson')
-    	  .then(response => response.json())
-   	  .then(data => {
-        	// Add the GeoJSON layer to the map
-       			 L.geoJSON(data, {
-         		   style: function(feature) {
-              			return {
-                		    color: "blue",
-               			    weight: 2,
-                 		    opacity: 0.6
-             			};
-            		}
-	        }).addTo(map);
-  	  })
-   	 .catch(error => console.log("Error loading GeoJSON: ", error));
-
+	// Replace 'YOUR_GEOJSON_FILE_URL' with the direct link to your raw GeoJSON file
+	fetch('https://raw.githubusercontent.com/Nburnwyn/leaflet-map-project/refs/heads/main/20241111_LNRS_Webmapping_CountyBoundary_v1.geojson')
+	    .then(response => response.json())
+	    .then(data => {
+	        // Add the GeoJSON layer to the map
+	        L.geoJSON(data, {
+	            style: function(feature) {
+	                return {
+	                    color: "blue",
+	                    weight: 2,
+	                    opacity: 0.6
+	                };
+	            }
+        	}).addTo(map);
+	    })
+	    .catch(error => console.log("Error loading GeoJSON: ", error));
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full-Screen Map v1</title>
+    <title>Neil's Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <style>
         /* Make the body and map container full screen */
@@ -16,14 +16,14 @@
         /* Basic legend styles */
         .legend {
             background-color: white;
-            padding: 10px;
-            line-height: 1.5em;
+            padding: 5px; /* Reduced padding for a snug fit */
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             font-size: 14px;
             position: absolute;
             bottom: 20px;
             left: 20px;
+            line-height: 1.2em; /* Adjust line height to fit content more closely */
         }
         
         .legend .marker-icon {
@@ -32,7 +32,7 @@
             display: inline-block;
             width: 12px;
             height: 20px;
-            margin-right: 6px;
+            margin-right: 4px;
         }
         
         .legend .boundary-line {
@@ -40,7 +40,7 @@
             width: 20px;
             height: 2px;
             background-color: blue;
-            margin-right: 6px;
+            margin-right: 4px;
         }
     </style>
 </head>
@@ -75,7 +75,7 @@
                         color: "blue",
                         weight: 4,
                         opacity: 1,
-                        fillOpacity: 0.0
+                        fillOpacity: 0
                     }
                 }).addTo(map);
 

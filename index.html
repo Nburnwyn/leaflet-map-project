@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neil's Map</title>
+    <title>Full-screen v2</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    
-    <!-- Leaflet.Legend CSS and JS -->
-    <link rel="stylesheet" href="https://raw.githubusercontent.com/ptma/Leaflet.Legend/master/dist/leaflet.legend.css"/>
-    <script src="https://raw.githubusercontent.com/ptma/Leaflet.Legend/master/dist/leaflet.legend.js"></script>
 
-    <!-- Leaflet EasyButton CSS and JS -->
-    <link rel="stylesheet" href="https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css">
-    <script src="https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js"></script>
+    <!-- Local Leaflet.Legend CSS and JS -->
+    <link rel="stylesheet" href="plugins/leaflet.legend.css"/>
+    <script src="plugins/leaflet.legend.js"></script>
+
+    <!-- Local Leaflet EasyButton CSS and JS -->
+    <link rel="stylesheet" href="plugins/easy-button.css">
+    <script src="plugins/easy-button.js"></script>
 
     <style>
         /* Full-screen map container */
@@ -30,8 +30,8 @@
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script>
-        // Initialize the map with a default view
-        var map = L.map('map').setView([52.211689, -1.6278504], 10);
+        // Initialize the map without a specific view, as it will be set by GeoJSON bounds
+        var map = L.map('map');
 
         // Add a tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -53,10 +53,10 @@
                 // Add the GeoJSON layer with a blue style
                 let geojsonLayer = L.geoJSON(data, {
                     style: {
-                        color: "blue",
+                        color: "black",
                         weight: 4,
                         opacity: 1,
-                        fillOpacity: 0.3
+                        fillOpacity: 0
                     }
                 }).addTo(map);
 
@@ -85,9 +85,9 @@
             ]
         }).addTo(map);
 
-        // Add EasyButton for resetting zoom to the initial view
+        // Add EasyButton for resetting zoom to fit the GeoJSON bounds
         L.easyButton('fa-home', function(btn, map){
-            map.setView([52.211689, -1.6278504], 10);
+            map.fitBounds(geojsonLayer.getBounds()); // Reset view to GeoJSON bounds
         }, 'Reset view').addTo(map);
     </script>
 </body>

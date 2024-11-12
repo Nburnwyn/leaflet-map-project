@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full-screen v2</title>
+    <title>Full-screen v3</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 
@@ -62,6 +62,11 @@
 
                 // Fit the map to the bounds of the GeoJSON layer
                 map.fitBounds(geojsonLayer.getBounds());
+
+                // Add EasyButton to reset view to the GeoJSON bounds
+                L.easyButton('fa-home', function(btn, map){
+                    map.fitBounds(geojsonLayer.getBounds()); // Reset view to GeoJSON bounds
+                }, 'Reset view').addTo(map);
             })
             .catch(error => console.log("Error loading GeoJSON: ", error));
 
@@ -84,11 +89,6 @@
                 }
             ]
         }).addTo(map);
-
-        // Add EasyButton for resetting zoom to fit the GeoJSON bounds
-        L.easyButton('fa-home', function(btn, map){
-            map.fitBounds(geojsonLayer.getBounds()); // Reset view to GeoJSON bounds
-        }, 'Reset view').addTo(map);
     </script>
 </body>
 </html>

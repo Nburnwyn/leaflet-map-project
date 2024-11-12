@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neils Map</title>
+    <title>Full-Screen Map v1</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <style>
-        #map {
-            height: 500px;
-            width: 100%;
+        /* Make the body and map container full screen */
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
+        
         /* Basic legend styles */
         .legend {
             background-color: white;
@@ -18,15 +21,20 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             font-size: 14px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
         }
+        
         .legend .marker-icon {
-            background-color: red;
-            border-radius: 50%;
+            background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png');
+            background-size: cover;
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 20px;
             margin-right: 6px;
         }
+        
         .legend .boundary-line {
             display: inline-block;
             width: 20px;
@@ -37,8 +45,8 @@
     </style>
 </head>
 <body>
-    <h1>Neils Map v2</h1>
     <div id="map"></div>
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script>
         // Initialize the map with a default view
@@ -67,7 +75,7 @@
                         color: "blue",
                         weight: 4,
                         opacity: 1,
-                        fillOpacity: 0.0
+                        fillOpacity: 0.3
                     }
                 }).addTo(map);
 
